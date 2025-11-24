@@ -18,6 +18,7 @@ import { GamificationModule } from './modules/gamification/gamification.module';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
 import { VideoModule } from './modules/video/video.module';
 import { QuizModule } from './modules/quiz/quiz.module';
+import { ProgressModule } from './modules/progress/progress.module';
 
 @Module({
   imports: [
@@ -61,6 +62,7 @@ import { QuizModule } from './modules/quiz/quiz.module';
     AnalyticsModule,
     VideoModule,
     QuizModule,
+    ProgressModule,
   ],
 })
 export class AppModule {}
