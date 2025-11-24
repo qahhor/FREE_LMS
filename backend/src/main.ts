@@ -15,7 +15,18 @@ async function bootstrap() {
 
   // Security
   app.use(helmet());
-  app.use(compression());
+
+  // Compression with optimized settings
+  app.use(compression({
+    filter: (req, res) => {
+      if (req.headers['x-no-compression']) {
+        return false;
+      }
+      return compression.filter(req, res);
+    },
+    threshold: 1024, // Only compress responses larger than 1KB
+    level: 6, // Compression level (0-9, 6 is balanced)
+  }));
 
   // CORS
   app.enableCors({
@@ -41,23 +52,52 @@ async function bootstrap() {
   // Swagger API Documentation
   const config = new DocumentBuilder()
     .setTitle('LMS API')
-    .setDescription('Learning Management System API Documentation')
+    .setDescription('Learning Management System API Documentation - Full-featured LMS with monetization and enterprise features')
     .setVersion('1.0')
     .addBearerAuth()
     .addTag('auth', 'Authentication endpoints')
-    .addTag('users', 'User management endpoints')
-    .addTag('courses', 'Course management endpoints')
-    .addTag('enrollments', 'Enrollment management endpoints')
-    .addTag('gamification', 'Gamification endpoints')
-    .addTag('analytics', 'Analytics endpoints')
+    .addTag('users', 'User management')
+    .addTag('courses', 'Course management')
+    .addTag('enrollments', 'Course enrollments')
+    .addTag('lessons', 'Lesson management')
+    .addTag('progress', 'User progress tracking')
+    .addTag('gamification', 'Gamification features')
+    .addTag('analytics', 'Analytics and reporting')
+    .addTag('video', 'Video processing')
+    .addTag('quiz', 'Quizzes and assessments')
+    .addTag('certificates', 'Certificate generation')
+    .addTag('email', 'Email notifications')
+    .addTag('community', 'Forums and discussions')
+    .addTag('payments', 'Payment processing')
+    .addTag('subscriptions', 'Subscription management')
+    .addTag('organizations', 'Multi-tenancy organizations')
+    .addTag('scorm', 'SCORM content')
+    .addTag('webinars', 'Live webinars')
+    .addTag('api', 'API key management')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api/docs', app, document);
+  SwaggerModule.setup('api/docs', app, document, {
+    swaggerOptions: {
+      persistAuthorization: true,
+      docExpansion: 'none',
+      filter: true,
+      showRequestDuration: true,
+    },
+  });
 
   await app.listen(port);
-  console.log(`🚀 Application is running on: http://localhost:${port}/${apiPrefix}`);
-  console.log(`📚 API Documentation: http://localhost:${port}/api/docs`);
+
+  console.log(`
+    ╔═══════════════════════════════════════════╗
+    ║   LMS Backend Server Started              ║
+    ║                                           ║
+    ║   🚀 Server: http://localhost:${port}       ║
+    ║   📚 API Docs: http://localhost:${port}/api/docs ║
+    ║   📊 Environment: ${process.env.NODE_ENV || 'development'}      ║
+    ║   ⚡ Performance: Optimized               ║
+    ╚═══════════════════════════════════════════╝
+  `);
 }
 
 bootstrap();

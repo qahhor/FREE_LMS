@@ -15,6 +15,7 @@ import { ChangePasswordDto } from './dto/change-password.dto';
 import { LoginResponseDto } from './dto/login-response.dto';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { LocalAuthGuard } from '../../common/guards/local-auth.guard';
+import { RateLimit } from '../../common/guards/rate-limit.guard';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -22,6 +23,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
+  @RateLimit(5, 3600) // 5 registrations per hour per IP
   @ApiOperation({ summary: 'Register a new user' })
   @ApiResponse({
     status: 201,
@@ -35,6 +37,7 @@ export class AuthController {
 
   @Post('login')
   @UseGuards(LocalAuthGuard)
+  @RateLimit(10, 300) // 10 login attempts per 5 minutes
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Login user' })
   @ApiResponse({
@@ -52,6 +55,7 @@ export class AuthController {
 
   @Post('change-password')
   @UseGuards(JwtAuthGuard)
+  @RateLimit(5, 3600) // 5 password changes per hour
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Change user password' })
   @ApiResponse({ status: 200, description: 'Password successfully changed' })
