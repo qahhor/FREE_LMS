@@ -21,6 +21,7 @@ import { QuizModule } from './modules/quiz/quiz.module';
 import { ProgressModule } from './modules/progress/progress.module';
 import { CertificateModule } from './modules/certificates/certificate.module';
 import { EmailModule } from './modules/email/email.module';
+import { CommunityModule } from './modules/community/community.module';
 
 @Module({
   imports: [
@@ -67,6 +68,7 @@ import { EmailModule } from './modules/email/email.module';
     QuizModule,
     ProgressModule,
     CertificateModule,
+    CommunityModule,
   ],
 })
 export class AppModule {}
