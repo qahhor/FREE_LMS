@@ -3,11 +3,19 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { CacheModule } from '@nestjs/cache-manager';
+import { APP_INTERCEPTOR, APP_GUARD } from '@nestjs/core';
+import { RedisModule } from '@nestjs-modules/ioredis';
 import * as redisStore from 'cache-manager-redis-store';
 
 // Config
 import { databaseConfig } from './config/database.config';
 import { redisConfig } from './config/redis.config';
+
+// Performance & Security
+import { PerformanceInterceptor } from './common/interceptors/performance.interceptor';
+import { CustomCacheInterceptor } from './common/interceptors/cache.interceptor';
+import { RateLimitGuard } from './common/guards/rate-limit.guard';
+import { SubscriptionGuard } from './common/guards/subscription.guard';
 
 // Modules
 import { AuthModule } from './modules/auth/auth.module';
@@ -45,12 +53,27 @@ import { WebinarsModule } from './modules/webinars/webinars.module';
       useFactory: databaseConfig,
     }),
 
-    // Redis Cache
+    // Redis Cache (cache-manager for simple caching)
     CacheModule.registerAsync({
       isGlobal: true,
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: redisConfig,
+    }),
+
+    // Redis (ioredis for advanced features: rate limiting, custom caching)
+    RedisModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        type: 'single',
+        options: {
+          host: configService.get<string>('REDIS_HOST', 'localhost'),
+          port: configService.get<number>('REDIS_PORT', 6379),
+          password: configService.get<string>('REDIS_PASSWORD'),
+          db: configService.get<number>('REDIS_DB', 0),
+        },
+      }),
     }),
 
     // Rate Limiting
@@ -83,6 +106,18 @@ import { WebinarsModule } from './modules/webinars/webinars.module';
     ApiModule,
     ScormModule,
     WebinarsModule,
+  ],
+  providers: [
+    // Global Performance Monitoring
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: PerformanceInterceptor,
+    },
+    // Global Caching
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: CustomCacheInterceptor,
+    },
   ],
 })
 export class AppModule {}
