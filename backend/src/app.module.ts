@@ -16,6 +16,11 @@ import { CoursesModule } from './modules/courses/courses.module';
 import { EnrollmentsModule } from './modules/enrollments/enrollments.module';
 import { GamificationModule } from './modules/gamification/gamification.module';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
+import { VideoModule } from './modules/video/video.module';
+import { QuizModule } from './modules/quiz/quiz.module';
+import { ProgressModule } from './modules/progress/progress.module';
+import { CertificateModule } from './modules/certificates/certificate.module';
+import { EmailModule } from './modules/email/email.module';
 
 @Module({
   imports: [
@@ -51,12 +56,17 @@ import { AnalyticsModule } from './modules/analytics/analytics.module';
     }),
 
     // Feature Modules
+    EmailModule,
     AuthModule,
     UsersModule,
     CoursesModule,
     EnrollmentsModule,
     GamificationModule,
     AnalyticsModule,
+    VideoModule,
+    QuizModule,
+    ProgressModule,
+    CertificateModule,
   ],
 })
 export class AppModule {}

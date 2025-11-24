@@ -64,4 +64,67 @@ export class CoursesService {
     const course = await this.findById(id);
     await this.coursesRepository.softRemove(course);
   }
+
+  /**
+   * Search courses by title, description, or category
+   */
+  async search(
+    query: string,
+    filters?: {
+      categoryId?: number;
+      level?: string;
+      isFree?: boolean;
+      minRating?: number;
+    },
+    page: number = 1,
+    limit: number = 20,
+  ): Promise<{ data: Course[]; total: number }> {
+    const queryBuilder = this.coursesRepository
+      .createQueryBuilder('course')
+      .leftJoinAndSelect('course.instructor', 'instructor')
+      .leftJoinAndSelect('course.category', 'category')
+      .where('course.status = :status', { status: CourseStatus.PUBLISHED });
+
+    // Text search in title and description
+    if (query) {
+      queryBuilder.andWhere(
+        '(LOWER(course.title) LIKE LOWER(:query) OR LOWER(course.description) LIKE LOWER(:query))',
+        { query: `%${query}%` },
+      );
+    }
+
+    // Apply filters
+    if (filters?.categoryId) {
+      queryBuilder.andWhere('course.categoryId = :categoryId', {
+        categoryId: filters.categoryId,
+      });
+    }
+
+    if (filters?.level) {
+      queryBuilder.andWhere('course.level = :level', { level: filters.level });
+    }
+
+    if (filters?.isFree !== undefined) {
+      queryBuilder.andWhere('course.isFree = :isFree', {
+        isFree: filters.isFree,
+      });
+    }
+
+    if (filters?.minRating) {
+      queryBuilder.andWhere('course.rating >= :minRating', {
+        minRating: filters.minRating,
+      });
+    }
+
+    // Pagination
+    queryBuilder
+      .skip((page - 1) * limit)
+      .take(limit)
+      .orderBy('course.rating', 'DESC')
+      .addOrderBy('course.studentCount', 'DESC');
+
+    const [data, total] = await queryBuilder.getManyAndCount();
+
+    return { data, total };
+  }
 }
