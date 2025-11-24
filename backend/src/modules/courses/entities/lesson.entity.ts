@@ -8,6 +8,10 @@ export enum LessonType {
   QUIZ = 'quiz',
   ASSIGNMENT = 'assignment',
   DOCUMENT = 'document',
+  PDF = 'pdf',
+  AUDIO = 'audio',
+  PRESENTATION = 'presentation',
+  CODE = 'code',
 }
 
 @Entity('lessons')
@@ -31,6 +35,18 @@ export class Lesson extends BaseEntity {
 
   @Column({ name: 'video_url', type: 'varchar', length: 500, nullable: true })
   videoUrl?: string;
+
+  @Column({ name: 'file_url', type: 'varchar', length: 500, nullable: true })
+  fileUrl?: string;
+
+  @Column({ name: 'file_type', type: 'varchar', length: 50, nullable: true })
+  fileType?: string;
+
+  @Column({ name: 'file_size', type: 'int', nullable: true })
+  fileSize?: number;
+
+  @Column({ name: 'downloadable', type: 'boolean', default: true })
+  downloadable: boolean;
 
   @Column({ type: 'int', default: 0 })
   duration: number; // in seconds
