@@ -50,6 +50,31 @@ export class CoursesController {
     return this.coursesService.findAll(page, limit);
   }
 
+  @Get('search')
+  @ApiOperation({ summary: 'Search courses with filters' })
+  @ApiResponse({ status: 200, description: 'Search results' })
+  async search(
+    @Query('q') query: string,
+    @Query('categoryId') categoryId?: number,
+    @Query('level') level?: string,
+    @Query('isFree') isFree?: string,
+    @Query('minRating') minRating?: number,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 20,
+  ): Promise<{ data: Course[]; total: number }> {
+    return this.coursesService.search(
+      query || '',
+      {
+        categoryId: categoryId ? +categoryId : undefined,
+        level,
+        isFree: isFree === 'true' ? true : isFree === 'false' ? false : undefined,
+        minRating: minRating ? +minRating : undefined,
+      },
+      +page,
+      +limit,
+    );
+  }
+
   @Get(':id')
   @ApiOperation({ summary: 'Get course by ID' })
   @ApiResponse({ status: 200, description: 'Course data' })
