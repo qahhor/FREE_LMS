@@ -23,6 +23,13 @@ import { CertificateModule } from './modules/certificates/certificate.module';
 import { EmailModule } from './modules/email/email.module';
 import { CommunityModule } from './modules/community/community.module';
 
+// Phase 3 Modules
+import { PaymentsModule } from './modules/payments/payments.module';
+import { OrganizationsModule } from './modules/organizations/organizations.module';
+import { ApiModule } from './modules/api/api.module';
+import { ScormModule } from './modules/scorm/scorm.module';
+import { WebinarsModule } from './modules/webinars/webinars.module';
+
 @Module({
   imports: [
     // Configuration
@@ -69,6 +76,13 @@ import { CommunityModule } from './modules/community/community.module';
     ProgressModule,
     CertificateModule,
     CommunityModule,
+
+    // Phase 3 Modules
+    PaymentsModule,
+    OrganizationsModule,
+    ApiModule,
+    ScormModule,
+    WebinarsModule,
   ],
 })
 export class AppModule {}
