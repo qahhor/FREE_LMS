@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FREE LMS - Корпоративная система обучения нового поколения. Геймификация, аналитика, интеграции.">
+    <title>FREE LMS - Корпоративная Система Обучения</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-dark: #4338CA;
+            --secondary: #10B981;
+            --accent: #F59E0B;
+            --dark: #1F2937;
+            --light: #F9FAFB;
+            --gradient: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 8rem 0 4rem;
+            background: linear-gradient(180deg, #EEF2FF 0%, white 100%);
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 span {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #6B7280;
+            margin-bottom: 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            color: #6B7280;
+            font-size: 0.875rem;
+        }
+
+        /* Features */
+        .features {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: #6B7280;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-card p {
+            color: #6B7280;
+            font-size: 0.95rem;
+        }
+
+        /* Services */
+        .services {
+            padding: 5rem 0;
+            background: var(--light);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .service-card h4 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-card p {
+            font-size: 0.8rem;
+            color: #6B7280;
+        }
+
+        /* Architecture */
+        .architecture {
+            padding: 5rem 0;
+        }
+
+        .arch-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .arch-list {
+            list-style: none;
+        }
+
+        .arch-list li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .arch-list li:before {
+            content: "✓";
+            background: var(--secondary);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+        }
+
+        /* CTA */
+        .cta {
+            padding: 5rem 0;
+            background: var(--gradient);
+            text-align: center;
+            color: white;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta p {
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta .btn {
+            background: white;
+            color: var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .footer-brand p {
+            color: #9CA3AF;
+            margin-top: 1rem;
+        }
+
+        .footer-links h4 {
+            margin-bottom: 1rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: #9CA3AF;
+            text-decoration: none;
+            display: block;
+            padding: 0.25rem 0;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #374151;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            text-align: center;
+            color: #9CA3AF;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-content,
+            .arch-content {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .features-grid,
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">FREE LMS</div>
+                <ul class="nav-links">
+                    <li><a href="#features">Возможности</a></li>
+                    <li><a href="#services">Сервисы</a></li>
+                    <li><a href="#architecture">Архитектура</a></li>
+                    <li><a href="#contact">Контакты</a></li>
+                </ul>
+                <a href="#demo" class="btn btn-primary">Демо</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div>
+                    <h1>Корпоративное обучение <span>нового поколения</span></h1>
+                    <p>FREE LMS — современная платформа для обучения сотрудников с геймификацией, аналитикой и интеграциями. Масштабируется до 100 000+ пользователей.</p>
+                    <div class="hero-buttons">
+                        <a href="#demo" class="btn btn-primary">Запросить демо</a>
+                        <a href="#features" class="btn btn-outline">Узнать больше</a>
+                    </div>
+                    <div class="stats">
+                        <div class="stat">
+                            <div class="stat-value">20+</div>
+                            <div class="stat-label">Микросервисов</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">100K</div>
+                            <div class="stat-label">Пользователей</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">99.9%</div>
+                            <div class="stat-label">Uptime SLA</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div style="background: var(--gradient); height: 400px; border-radius: 16px; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
+                        📚 Dashboard Preview
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Ключевые возможности</h2>
+                <p>Всё необходимое для эффективного корпоративного обучения</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎮</div>
+                    <h3>Геймификация</h3>
+                    <p>Баллы, достижения, рейтинги, командные челленджи и виртуальная валюта для мотивации</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Аналитика и BI</h3>
+                    <p>Детальные отчёты, дашборды, ROI обучения, экспорт в Excel/PDF</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛤️</div>
+                    <h3>Траектории обучения</h3>
+                    <p>Персональные планы развития, карьерные треки, матрица компетенций</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>Социальное обучение</h3>
+                    <p>Менторинг, учебные группы, Q&A форум, peer-to-peer контент</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <h3>Compliance</h3>
+                    <p>Обязательные курсы, сертификаты с истечением, аудит, электронные подписи</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <h3>Интеграции</h3>
+                    <p>HR-системы, календари, SSO, видеоконференции, LDAP/AD</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Microservices -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>20 Микросервисов</h2>
+                <p>Масштабируемая архитектура для enterprise-нагрузок</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h4>🔐 Auth Service</h4>
+                    <p>JWT, OAuth2, LDAP</p>
+                </div>
+                <div class="service-card">
+                    <h4>📚 Course Service</h4>
+                    <p>Курсы, уроки, квизы</p>
+                </div>
+                <div class="service-card">
+                    <h4>📝 Enrollment</h4>
+                    <p>Записи, прогресс</p>
+                </div>
+                <div class="service-card">
+                    <h4>💳 Payment</h4>
+                    <p>Stripe, подписки</p>
+                </div>
+                <div class="service-card">
+                    <h4>🎮 Gamification</h4>
+                    <p>Баллы, достижения</p>
+                </div>
+                <div class="service-card">
+                    <h4>🛤️ Learning Path</h4>
+                    <p>Траектории, треки</p>
+                </div>
+                <div class="service-card">
+                    <h4>🎯 Skills</h4>
+                    <p>Матрица, gap-анализ</p>
+                </div>
+                <div class="service-card">
+                    <h4>📋 IDP</h4>
+                    <p>Планы развития</p>
+                </div>
+                <div class="service-card">
+                    <h4>💬 Feedback</h4>
+                    <p>360° обратная связь</p>
+                </div>
+                <div class="service-card">
+                    <h4>🤝 Mentoring</h4>
+                    <p>Менторинг, сессии</p>
+                </div>
+                <div class="service-card">
+                    <h4>👥 Social</h4>
+                    <p>Группы, Q&A</p>
+                </div>
+                <div class="service-card">
+                    <h4>✅ Compliance</h4>
+                    <p>Аудит, подписи</p>
+                </div>
+                <div class="service-card">
+                    <h4>📊 Reporting</h4>
+                    <p>BI, дашборды</p>
+                </div>
+                <div class="service-card">
+                    <h4>🔗 Integration</h4>
+                    <p>HR, календари</p>
+                </div>
+                <div class="service-card">
+                    <h4>🔔 Notification</h4>
+                    <p>Email, Push, Telegram</p>
+                </div>
+                <div class="service-card">
+                    <h4>📈 Analytics</h4>
+                    <p>Метрики, ML</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture -->
+    <section class="architecture" id="architecture">
+        <div class="container">
+            <div class="arch-content">
+                <div>
+                    <h2>Enterprise-архитектура</h2>
+                    <p style="color: #6B7280; margin: 1rem 0 2rem;">Построена на современном стеке технологий для максимальной производительности и надёжности</p>
+                    <ul class="arch-list">
+                        <li>Java 21 LTS + Spring Boot 3.2</li>
+                        <li>Spring Cloud (Eureka, Gateway, Config)</li>
+                        <li>PostgreSQL 16 + Redis 7</li>
+                        <li>Apache Kafka для event-driven</li>
+                        <li>Docker + Kubernetes</li>
+                        <li>Prometheus + Grafana мониторинг</li>
+                        <li>Автомасштабирование до 1000+ RPS</li>
+                        <li>99.9% SLA с HA-конфигурацией</li>
+                    </ul>
+                </div>
+                <div style="background: #1F2937; padding: 2rem; border-radius: 16px; color: #10B981; font-family: monospace; font-size: 0.9rem;">
+<pre>
+┌─────────────────────────────────┐
+│         Load Balancer           │
+└───────────────┬─────────────────┘
+                │
+┌───────────────▼─────────────────┐
+│       API Gateway (x3)          │
+└───────────────┬─────────────────┘
+                │
+    ┌───────────┼───────────┐
+    │           │           │
+┌───▼───┐   ┌───▼───┐   ┌───▼───┐
+│ Auth  │   │Course │   │ More  │
+│  x2   │   │  x3   │   │  ...  │
+└───┬───┘   └───┬───┘   └───┬───┘
+    │           │           │
+┌───▼───────────▼───────────▼───┐
+│     PostgreSQL + Redis         │
+│         Kafka Cluster          │
+└────────────────────────────────┘
+</pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta" id="demo">
+        <div class="container">
+            <h2>Готовы начать?</h2>
+            <p>Запросите демонстрацию и узнайте, как FREE LMS может трансформировать обучение в вашей компании</p>
+            <a href="mailto:demo@freelms.io" class="btn">Запросить демо</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo" style="color: white;">FREE LMS</div>
+                    <p>Корпоративная система обучения нового поколения. Открытый исходный код, enterprise-качество.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Продукт</h4>
+                    <ul>
+                        <li><a href="#features">Возможности</a></li>
+                        <li><a href="#services">Сервисы</a></li>
+                        <li><a href="#architecture">Архитектура</a></li>
+                        <li><a href="#">Документация</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Ресурсы</h4>
+                    <ul>
+                        <li><a href="#">API Docs</a></li>
+                        <li><a href="#">GitHub</a></li>
+                        <li><a href="#">Блог</a></li>
+                        <li><a href="#">Changelog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Контакты</h4>
+                    <ul>
+                        <li><a href="mailto:info@freelms.io">info@freelms.io</a></li>
+                        <li><a href="#">Telegram</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 FREE LMS. Открытый исходный код под лицензией MIT.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
