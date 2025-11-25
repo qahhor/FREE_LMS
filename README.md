@@ -1,571 +1,662 @@
-# 🎓 FREE LMS - Learning Management System
+# FREE LMS
 
-Современная enterprise-ready платформа для онлайн-обучения с монетизацией и multi-tenancy, созданная на **Node.js + NestJS** (Backend) и **Angular 17+** (Frontend).
+**Enterprise Learning Management System**
 
-## 🌟 Особенности
-
-### Основные функции (Phase 1-2)
-- ✅ **Аутентификация и авторизация** (JWT, роли)
-- 📚 **Управление курсами** (создание, редактирование, публикация)
-- 👥 **Управление пользователями** (Admin, Instructor, Student)
-- 📊 **Отслеживание прогресса** обучения
-- 🎮 **Геймификация** (баллы, уровни, достижения)
-- 📈 **Аналитика** для студентов и преподавателей
-- 🎥 **Видео-контент** с поддержкой HLS стриминга
-- 📝 **Викторины и тесты** с автопроверкой
-- 🏆 **Сертификаты** по завершению курсов
-- 💬 **Форумы и обсуждения** внутри курсов
-
-### Монетизация и Enterprise (Phase 3)
-- 💳 **Платежные системы** (Stripe, Payme, Click)
-- 📦 **Подписки и планы** (Free, Pro, Enterprise)
-- 🏢 **Multi-tenancy** (Organizations)
-- 🎓 **SCORM поддержка** (импорт стандартных курсов)
-- 🎤 **Вебинары** (Zoom, Jitsi интеграция)
-- 🔐 **SSO** (SAML, OAuth, LDAP)
-- 🎨 **White-label** (брендинг организаций)
-- 🔑 **API ключи** для интеграций
-
-### Производительность и Безопасность
-- ⚡ **Redis кэширование** (97% ускорение запросов)
-- 🛡️ **Rate Limiting** (защита от DDoS, брутфорса)
-- 📊 **Performance мониторинг** (метрики в реальном времени)
-- 🗄️ **60+ оптимизированных индексов БД**
-- 🗜️ **Gzip сжатие** (60-80% экономия трафика)
-- 🚀 **Production-ready** (10K+ одновременных пользователей)
-
-## 🛠 Технологический стек
-
-### Backend
-- **NestJS 10+** - прогрессивный Node.js framework
-- **TypeScript 5.3+** - типизированный JavaScript
-- **TypeORM 0.3+** - ORM для работы с БД
-- **PostgreSQL 14+** - основная база данных
-- **Redis/ioredis** - кэширование, rate limiting, сессии
-- **JWT + Passport** - аутентификация и авторизация
-- **Swagger/OpenAPI** - автоматическая API документация
-- **Stripe SDK** - международные платежи
-- **SCORM** - поддержка образовательных стандартов
-- **Helmet + Compression** - безопасность и производительность
-
-### Frontend
-- **Angular 17+** - современный фреймворк с Signals
-- **TypeScript 5.3+** - типизированный JavaScript
-- **Angular Material** - Material Design компоненты
-- **RxJS 7.8+** - реактивное программирование
-- **Lazy Loading** - оптимизация загрузки модулей
-- **AOT Compilation** - production оптимизации
-
-### Производительность
-- **Redis Cache** - многоуровневое кэширование
-- **Database Indexes** - 60+ оптимизированных индексов
-- **Rate Limiting** - защита от злоупотреблений
-- **Compression** - Gzip сжатие ответов
-- **Bundle Optimization** - минификация и tree-shaking
-
-### DevOps
-- **Docker** & **Docker Compose** - контейнеризация
-- **GitHub Actions** - CI/CD пайплайны
-- **PostgreSQL** - реляционная БД с индексами
-- **Redis** - кэш, очереди, rate limiting
-- **MinIO** - S3-compatible файловое хранилище
-
-## 📋 Предварительные требования
-
-Установите следующее ПО:
-
-- **Node.js** v20+ ([скачать](https://nodejs.org/))
-- **Docker** & **Docker Compose** ([скачать](https://www.docker.com/))
-- **Git** ([скачать](https://git-scm.com/))
-- **PostgreSQL 14+** (если запуск без Docker)
-- **Redis** (если запуск без Docker)
-
-### Системные требования
-
-**Минимальные:**
-- CPU: 2 cores
-- RAM: 4GB
-- Disk: 10GB
-
-**Рекомендуемые (production):**
-- CPU: 4+ cores
-- RAM: 8GB+
-- Disk: 50GB+ SSD
-- Redis: 2GB+ RAM выделено
-
-## 🚀 Быстрый старт
-
-### 1. Клонирование репозитория
-
-```bash
-git clone <repository-url>
-cd FREE_LMS
-```
-
-### 2. Настройка Backend
-
-```bash
-cd backend
-
-# Установка зависимостей
-npm install
-
-# Копирование .env файла
-cp .env.example .env
-
-# Настройте переменные окружения в .env файле
-# ВАЖНО: Настройте Redis для кэширования и rate limiting
-```
-
-**Обязательно настройте следующие переменные:**
-- `DATABASE_*` - подключение к PostgreSQL
-- `REDIS_HOST`, `REDIS_PORT` - подключение к Redis (критично!)
-- `JWT_SECRET` - секретный ключ для JWT
-- Payment keys (Stripe, Payme, Click) - для монетизации
-
-### 2.1. Запуск миграций базы данных
-
-```bash
-cd backend
-
-# Запуск миграций (создание таблиц + индексы)
-npm run migration:run
-
-# Проверка статуса миграций
-npm run typeorm migration:show
-```
-
-**Важно:** Миграция `1700000000000-AddPerformanceIndexes.ts` создаст 60+ индексов для оптимизации производительности. Это может занять 1-2 минуты.
-
-### 3. Настройка Frontend
-
-```bash
-cd frontend
-
-# Установка зависимостей
-npm install
-
-# Настройка environments (опционально)
-# Отредактируйте src/environments/environment.ts для dev
-# Отредактируйте src/environments/environment.prod.ts для production
-```
-
-**Настройте API endpoints и feature flags в environment файлах.**
-
-### 4. Запуск с Docker (рекомендуется)
-
-Из корневой директории проекта:
-
-```bash
-# Запуск всех сервисов (PostgreSQL, Redis, MinIO, Backend, Frontend)
-docker-compose up -d
-
-# Просмотр логов
-docker-compose logs -f
-
-# Остановка сервисов
-docker-compose down
-```
-
-Доступ к приложению:
-- **Frontend**: http://localhost:4200
-- **Backend API**: http://localhost:3000/api/v1
-- **API Docs (Swagger)**: http://localhost:3000/api/docs
-- **MinIO Console**: http://localhost:9001
-
-### 5. Запуск без Docker (для разработки)
-
-#### Запуск базы данных
-
-```bash
-# Запуск только PostgreSQL, Redis и MinIO
-docker-compose up -d postgres redis minio
-```
-
-#### Запуск Backend
-
-```bash
-cd backend
-npm run start:dev
-```
-
-Backend будет доступен на http://localhost:3000
-
-#### Запуск Frontend
-
-```bash
-cd frontend
-npm start
-```
-
-Frontend будет доступен на http://localhost:4200
-
-## 📁 Структура проекта
-
-```
-FREE_LMS/
-├── backend/                 # NestJS Backend
-│   ├── src/
-│   │   ├── common/         # Общие компоненты
-│   │   │   ├── decorators/ # Декораторы
-│   │   │   ├── guards/     # Guards для авторизации
-│   │   │   ├── interceptors/ # HTTP Interceptors
-│   │   │   └── enums/      # Перечисления
-│   │   ├── config/         # Конфигурация
-│   │   ├── modules/        # Feature модули
-│   │   │   ├── auth/       # Аутентификация
-│   │   │   ├── users/      # Пользователи
-│   │   │   ├── courses/    # Курсы
-│   │   │   ├── enrollments/ # Записи на курсы
-│   │   │   ├── gamification/ # Геймификация
-│   │   │   └── analytics/  # Аналитика
-│   │   ├── app.module.ts
-│   │   └── main.ts
-│   ├── package.json
-│   └── tsconfig.json
-│
-├── frontend/               # Angular Frontend
-│   ├── src/
-│   │   ├── app/
-│   │   │   ├── core/      # Singleton сервисы
-│   │   │   │   ├── auth/
-│   │   │   │   ├── guards/
-│   │   │   │   └── services/
-│   │   │   ├── shared/    # Переиспользуемые компоненты
-│   │   │   └── features/  # Feature модули
-│   │   │       ├── auth/
-│   │   │       ├── dashboard/
-│   │   │       ├── courses/
-│   │   │       └── profile/
-│   │   ├── assets/
-│   │   └── environments/
-│   ├── package.json
-│   └── angular.json
-│
-├── database/              # SQL скрипты
-│   └── init.sql
-│
-├── docker-compose.yml     # Docker конфигурация
-├── package.json           # Root package.json
-└── README.md
-```
-
-## 🔐 API Endpoints
-
-### Аутентификация
-
-```
-POST   /api/v1/auth/register          # Регистрация
-POST   /api/v1/auth/login             # Вход
-POST   /api/v1/auth/change-password   # Смена пароля
-```
-
-### Пользователи
-
-```
-GET    /api/v1/users                  # Список пользователей (Admin)
-GET    /api/v1/users/me               # Текущий пользователь
-GET    /api/v1/users/:id              # Получить пользователя
-PUT    /api/v1/users/me               # Обновить профиль
-PUT    /api/v1/users/:id              # Обновить пользователя (Admin)
-DELETE /api/v1/users/:id              # Удалить пользователя (Admin)
-```
-
-### Курсы
-
-```
-GET    /api/v1/courses                # Список курсов
-GET    /api/v1/courses/:id            # Получить курс
-POST   /api/v1/courses                # Создать курс (Instructor)
-PUT    /api/v1/courses/:id            # Обновить курс
-PUT    /api/v1/courses/:id/publish    # Опубликовать курс
-DELETE /api/v1/courses/:id            # Удалить курс
-```
-
-### Записи на курсы
-
-```
-GET    /api/v1/enrollments/my-courses # Мои курсы
-```
-
-## 🔑 Переменные окружения
-
-### Backend (.env)
-
-```env
-# Application
-NODE_ENV=development
-PORT=3000
-API_PREFIX=api/v1
-
-# Database
-DATABASE_HOST=localhost
-DATABASE_PORT=5432
-DATABASE_NAME=lms_db
-DATABASE_USER=lms_user
-DATABASE_PASSWORD=lms_password
-
-# JWT
-JWT_SECRET=your-super-secret-jwt-key-change-in-production
-JWT_EXPIRES_IN=7d
-
-# Redis (КРИТИЧНО для кэширования и rate limiting!)
-REDIS_HOST=localhost
-REDIS_PORT=6379
-REDIS_PASSWORD=  # Оставьте пустым для локальной разработки
-REDIS_DB=0
-
-# MinIO (File Storage)
-MINIO_ENDPOINT=localhost
-MINIO_PORT=9000
-MINIO_ACCESS_KEY=minioadmin
-MINIO_SECRET_KEY=minioadmin
-MINIO_BUCKET_NAME=lms-files
-
-# Payments (Phase 3)
-STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key
-STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret
-
-# Payme (Uzbekistan)
-PAYME_MERCHANT_ID=your_payme_merchant_id
-PAYME_SECRET_KEY=your_payme_secret
-
-# Click (Uzbekistan)
-CLICK_MERCHANT_ID=your_click_merchant_id
-CLICK_SECRET_KEY=your_click_secret
-CLICK_SERVICE_ID=your_service_id
-
-# Webinars (Phase 3)
-ZOOM_API_KEY=your_zoom_api_key
-ZOOM_API_SECRET=your_zoom_api_secret
-JITSI_DOMAIN=meet.jit.si
-
-# SCORM (Phase 3)
-SCORM_STORAGE_PATH=/path/to/scorm/content
-
-# Rate Limiting (Customizable)
-THROTTLE_TTL=60          # Default time window in seconds
-THROTTLE_LIMIT=10        # Default request limit
-
-# CORS
-CORS_ORIGIN=http://localhost:4200  # Frontend URL
-```
-
-### Frontend (src/environments/environment.ts)
-
-```typescript
-export const environment = {
-  production: false,
-  apiUrl: 'http://localhost:3000/api/v1',
-
-  // Payment gateways
-  stripe: { publicKey: 'pk_test_your_stripe_public_key' },
-
-  // Feature flags
-  features: {
-    subscriptions: true,
-    multiTenancy: true,
-    scormSupport: true,
-    webinars: true,
-    whiteLabel: true,
-    sso: true,
-    api: true,
-  },
-};
-```
-
-## 🧪 Тестирование
-
-### Backend Tests
-
-```bash
-cd backend
-
-# Unit tests
-npm run test
-
-# E2E tests
-npm run test:e2e
-
-# Test coverage
-npm run test:cov
-```
-
-### Frontend Tests
-
-```bash
-cd frontend
-
-# Unit tests
-npm run test
-
-# E2E tests
-npm run e2e
-```
-
-## 📦 Сборка для production
-
-### Backend
-
-```bash
-cd backend
-
-# Production build
-npm run build
-
-# Запуск миграций
-npm run migration:run
-
-# Запуск в production режиме
-npm run start:prod
-```
-
-**Оптимизации в production:**
-- ✅ Gzip compression включено
-- ✅ Redis кэширование активно
-- ✅ Rate limiting работает
-- ✅ Performance monitoring включен
-- ✅ Source maps отключены
-
-### Frontend
-
-```bash
-cd frontend
-
-# Production build с оптимизациями
-npm run build -- --configuration=production
-
-# Файлы будут в dist/lms-frontend
-```
-
-**Production оптимизации:**
-- ✅ AOT (Ahead-of-Time) компиляция
-- ✅ Build Optimizer и Tree-shaking
-- ✅ JavaScript и CSS минификация
-- ✅ Critical CSS inlining
-- ✅ Vendor chunking для кэширования
-- ✅ Output hashing для cache busting
-- ✅ Bundle size ~60% меньше dev версии
-
-### Проверка bundle размера
-
-```bash
-cd frontend
-npm run build -- --configuration=production --stats-json
-npx webpack-bundle-analyzer dist/lms-frontend/stats.json
-```
-
-## 🤝 Вклад в проект
-
-1. Fork проекта
-2. Создайте feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit изменения (`git commit -m 'Add some AmazingFeature'`)
-4. Push в branch (`git push origin feature/AmazingFeature`)
-5. Откройте Pull Request
-
-## 📄 Лицензия
-
-Этот проект лицензирован под MIT License.
-
-## 📚 Дополнительная документация
-
-- 📊 **[PERFORMANCE_OPTIMIZATIONS.md](./PERFORMANCE_OPTIMIZATIONS.md)** - Полное руководство по оптимизациям производительности (679 строк)
-- 🏗️ **[PHASE3_FINAL_GUIDE.md](./PHASE3_FINAL_GUIDE.md)** - Deployment и операционное руководство (9,500+ строк)
-- 📖 **[PROJECT_COMPLETE.md](./PROJECT_COMPLETE.md)** - Полная документация проекта (8,800+ строк)
-- 🎨 **[PHASE3_FRONTEND_SUMMARY.md](./PHASE3_FRONTEND_SUMMARY.md)** - Frontend архитектура Phase 3
-
-### Ключевые особенности документации
-
-**PERFORMANCE_OPTIMIZATIONS.md** включает:
-- Детальное описание всех 60+ индексов БД
-- Стратегии кэширования и TTL правила
-- Конфигурация rate limiting
-- Мониторинг и метрики
-- Performance тестирование
-- Troubleshooting guide
-
-**PHASE3_FINAL_GUIDE.md** включает:
-- Полную установку и конфигурацию
-- API документацию всех 15 модулей
-- Примеры использования
-- Безопасность и best practices
-- Production deployment чеклист
-
-## 🎯 Production Performance Metrics
-
-После оптимизаций система показывает:
-
-| Метрика | Результат |
-|---------|-----------|
-| Database queries | 97-98% быстрее |
-| API response time | <50ms (95 percentile) |
-| Concurrent users | 10,000+ поддерживается |
-| Requests per day | 1M+ обрабатывается |
-| Bandwidth saving | 60-80% (compression) |
-| Bundle size | ~60% меньше (lazy loading) |
-| Cache hit rate | 85%+ на популярных endpoints |
-
-## 🔧 Troubleshooting
-
-### Redis не подключается
-```bash
-# Проверьте что Redis запущен
-docker ps | grep redis
-
-# Проверьте логи Redis
-docker logs <redis-container-id>
-
-# Протестируйте подключение
-redis-cli -h localhost -p 6379 ping
-```
-
-### Медленные запросы к БД
-```bash
-# Проверьте что миграция с индексами выполнена
-cd backend
-npm run typeorm migration:show
-
-# Посмотрите медленные запросы (в PostgreSQL)
-# Подключитесь к БД и выполните:
-SELECT query, calls, total_time, mean_time
-FROM pg_stat_statements
-ORDER BY mean_time DESC
-LIMIT 10;
-```
-
-### Frontend не собирается
-```bash
-# Очистите кэш и node_modules
-cd frontend
-rm -rf node_modules package-lock.json
-npm install
-
-# Проверьте версию Node.js
-node --version  # Должно быть >= 20
-```
-
-### Подробнее см. [PERFORMANCE_OPTIMIZATIONS.md](./PERFORMANCE_OPTIMIZATIONS.md)
-
-## 👥 Авторы
-
-- Ваше имя - [@your-username](https://github.com/your-username)
-
-## 🙏 Благодарности
-
-- Вдохновлено [Exode.biz](https://exode.biz/)
-- Документация по архитектуре в файлах:
-  - `LMS_Technical_Architecture.md`
-  - `LMS_Development_Roadmap.md`
-  - `LMS_Code_Examples.md`
-
-## 📞 Поддержка
-
-Если у вас возникли вопросы или проблемы:
-
-- 📧 Email: support@yourlms.com
-- 💬 Telegram: @your_telegram
-- 🐛 [Issues](https://github.com/your-username/FREE_LMS/issues)
+A full-featured, production-ready LMS platform built with **Java Spring Boot microservices** and **Angular 17+**.
 
 ---
 
-**Создано с ❤️ для образования**
+## Table of Contents
+
+- [Overview](#overview)
+- [Architecture](#architecture)
+- [Technology Stack](#technology-stack)
+- [Project Structure](#project-structure)
+- [Prerequisites](#prerequisites)
+- [Quick Start](#quick-start)
+- [Development Guide](#development-guide)
+- [API Documentation](#api-documentation)
+- [Configuration](#configuration)
+- [Deployment](#deployment)
+- [Features](#features)
+- [Troubleshooting](#troubleshooting)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
+
+## Overview
+
+FREE LMS is an enterprise-grade Learning Management System that provides:
+
+- **Course Management** - Create, publish, and manage courses with modules and lessons
+- **User Management** - Multi-role system (Admin, Instructor, Student, Manager)
+- **Progress Tracking** - Track student progress, generate certificates
+- **Payments** - Subscriptions via Stripe, Payme, Click
+- **AI Recommendations** - Personalized course suggestions
+- **Smart Search** - NLP-powered search with synonyms
+- **Multi-tenancy** - Organizations with custom branding
+- **Notifications** - Email, Push, WebSocket real-time updates
+- **Webinars** - Zoom and Jitsi integration
+- **Gamification** - Points, levels, achievements, badges
+
+---
+
+## Architecture
+
+```
+                              CLIENTS
+               (Angular 17+ / Mobile / Third-party)
+                                |
+                                v
++---------------------------------------------------------------+
+|                    API GATEWAY (Port 8000)                    |
+|           Spring Cloud Gateway + Rate Limiting + JWT          |
++---------------------------------------------------------------+
+                                |
+        +-----------------------+-----------------------+
+        v                       v                       v
++---------------+       +---------------+       +---------------+
+| AUTH SERVICE  |       |COURSE SERVICE |       |  ENROLLMENT   |
+|  (Port 8081)  |       |  (Port 8082)  |       |  (Port 8083)  |
+| - Users       |       | - Courses     |       | - Enrollments |
+| - JWT Auth    |       | - Lessons     |       | - Progress    |
+| - Roles       |       | - Quizzes     |       | - Certificates|
++---------------+       +---------------+       +---------------+
+        |                       |                       |
+        v                       v                       v
++---------------+       +---------------+       +---------------+
+|   PAYMENT     |       | NOTIFICATION  |       |  ANALYTICS    |
+|  (Port 8084)  |       |  (Port 8085)  |       |  (Port 8086)  |
+| - Stripe      |       | - Email       |       | - AI Recs     |
+| - Payme/Click |       | - Push        |       | - Search      |
+| - Subscriptions|      | - WebSocket   |       | - Risk Score  |
++---------------+       +---------------+       +---------------+
+        |                       |                       |
+        +-----------------------+-----------------------+
+                                |
+                                v
+                    +-------------------+
+                    |   ORGANIZATION    |
+                    |   (Port 8087)     |
+                    | - Multi-tenancy   |
+                    | - SSO             |
+                    | - SCORM           |
+                    | - Webinars        |
+                    +-------------------+
+                                |
+        +-----------------------+-----------------------+
+        v                       v                       v
++---------------+       +---------------+       +---------------+
+|    EUREKA     |       | CONFIG SERVER |       |    KAFKA      |
+|  (Port 8761)  |       |  (Port 8888)  |       |  (Port 9092)  |
++---------------+       +---------------+       +---------------+
+```
+
+---
+
+## Technology Stack
+
+### Backend (Java Microservices)
+
+| Component | Technology | Version |
+|-----------|------------|---------|
+| Language | Java | 21 LTS |
+| Framework | Spring Boot | 3.4.0 |
+| Cloud | Spring Cloud | 2024.0.0 |
+| Security | Spring Security + JWT | 6.x |
+| Database | PostgreSQL | 16 |
+| ORM | Spring Data JPA / Hibernate | 6.x |
+| Cache | Redis | 7 |
+| Message Broker | Apache Kafka | 3.5+ |
+| API Docs | SpringDoc OpenAPI | 2.7.0 |
+| Build | Maven | 3.9+ |
+
+### Frontend
+
+| Component | Technology | Version |
+|-----------|------------|---------|
+| Framework | Angular | 17+ |
+| UI Library | Angular Material | 17+ |
+| State | NgRx | 17+ |
+| HTTP | RxJS + HttpClient | 7.8+ |
+
+### Infrastructure
+
+| Component | Technology |
+|-----------|------------|
+| Containerization | Docker + Docker Compose |
+| Service Discovery | Netflix Eureka |
+| Configuration | Spring Cloud Config |
+| Object Storage | MinIO (S3-compatible) |
+
+---
+
+## Project Structure
+
+```
+FREE_LMS/
+|
++-- backend-java/                 # Java Spring Boot Microservices
+|   +-- common/                   # Shared library (DTO, Entity, Security)
+|   +-- docker/                   # Docker configurations
+|   +-- docker-compose.yml        # Service orchestration
+|   +-- pom.xml                   # Parent Maven POM
+|   +-- services/
+|       +-- service-registry/     # Eureka Server (8761)
+|       +-- config-server/        # Config Server (8888)
+|       +-- gateway-service/      # API Gateway (8000)
+|       +-- auth-service/         # Authentication (8081)
+|       +-- course-service/       # Courses (8082)
+|       +-- enrollment-service/   # Enrollments (8083)
+|       +-- payment-service/      # Payments (8084)
+|       +-- notification-service/ # Notifications (8085)
+|       +-- analytics-service/    # Analytics (8086)
+|       +-- organization-service/ # Organizations (8087)
+|
++-- frontend/                     # Angular 17+ Application
+|   +-- src/
+|       +-- app/
+|           +-- core/             # Singleton services
+|           +-- features/         # Feature modules
+|           +-- shared/           # Shared components
+|
++-- bots/                         # Integration Bots (Node.js)
+|   +-- telegram/                 # Telegram Bot
+|   +-- whatsapp/                 # WhatsApp Bot
+|
++-- database/                     # Database scripts
+|   +-- init.sql
+|
++-- .github/                      # GitHub Actions
++-- CONTRIBUTING.md
++-- LICENSE
++-- SECURITY.md
++-- README.md
+```
+
+---
+
+## Prerequisites
+
+Ensure you have the following installed:
+
+| Software | Version | Required |
+|----------|---------|----------|
+| Java JDK | 21+ | Yes |
+| Maven | 3.9+ | Yes |
+| Node.js | 18+ | Yes (for frontend) |
+| Docker | 24+ | Yes |
+| Docker Compose | 2.20+ | Yes |
+| Git | 2.40+ | Yes |
+
+### Verify Installation
+
+```bash
+java -version          # Should show 21+
+mvn -version           # Should show 3.9+
+node -version          # Should show 18+
+docker --version       # Should show 24+
+docker compose version # Should show 2.20+
+```
+
+---
+
+## Quick Start
+
+### Option 1: Docker (Recommended)
+
+Start all services with a single command:
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/your-repo/FREE_LMS.git
+cd FREE_LMS/backend-java
+
+# 2. Start all services
+docker compose up -d
+
+# 3. View logs
+docker compose logs -f
+
+# 4. Check service health
+docker compose ps
+```
+
+**Services will be available at:**
+
+| Service | URL | Credentials |
+|---------|-----|-------------|
+| API Gateway | http://localhost:8000 | - |
+| Eureka Dashboard | http://localhost:8761 | eureka / eureka123 |
+| Frontend | http://localhost:4200 | - |
+| MinIO Console | http://localhost:9001 | minioadmin / minioadmin |
+
+### Option 2: Manual Development Setup
+
+#### Step 1: Start Infrastructure
+
+```bash
+cd backend-java
+
+# Start database, cache, and message broker
+docker compose up -d postgres redis kafka zookeeper minio
+```
+
+#### Step 2: Build Backend
+
+```bash
+# Build all microservices
+./mvnw clean install -DskipTests
+```
+
+#### Step 3: Start Services
+
+Start services in the following order:
+
+```bash
+# Terminal 1: Service Registry (must start first)
+cd services/service-registry
+../../mvnw spring-boot:run
+
+# Terminal 2: Config Server (wait 30s for registry)
+cd services/config-server
+../../mvnw spring-boot:run
+
+# Terminal 3: Gateway
+cd services/gateway-service
+../../mvnw spring-boot:run
+
+# Terminal 4+: Business Services (any order after gateway)
+cd services/auth-service
+../../mvnw spring-boot:run
+
+cd services/course-service
+../../mvnw spring-boot:run
+
+# ... start other services as needed
+```
+
+#### Step 4: Start Frontend
+
+```bash
+cd frontend
+npm install
+npm start
+# Frontend available at http://localhost:4200
+```
+
+---
+
+## Development Guide
+
+### Backend Development
+
+#### Service Ports Reference
+
+| Service | Port | Health Check |
+|---------|------|--------------|
+| API Gateway | 8000 | /actuator/health |
+| Service Registry | 8761 | /actuator/health |
+| Config Server | 8888 | /actuator/health |
+| Auth Service | 8081 | /actuator/health |
+| Course Service | 8082 | /actuator/health |
+| Enrollment Service | 8083 | /actuator/health |
+| Payment Service | 8084 | /actuator/health |
+| Notification Service | 8085 | /actuator/health |
+| Analytics Service | 8086 | /actuator/health |
+| Organization Service | 8087 | /actuator/health |
+
+#### Creating a New Service
+
+1. Create directory structure:
+```bash
+mkdir -p services/my-service/src/main/java/com/freelms/myservice
+mkdir -p services/my-service/src/main/resources
+```
+
+2. Create `pom.xml` with parent reference:
+```xml
+<parent>
+    <groupId>com.freelms</groupId>
+    <artifactId>free-lms-parent</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <relativePath>../../pom.xml</relativePath>
+</parent>
+<artifactId>my-service</artifactId>
+```
+
+3. Add to parent `pom.xml` modules section
+
+4. Create `application.yml` configuration
+
+5. Add route in `gateway-service`
+
+6. Add to `docker-compose.yml`
+
+#### Running Tests
+
+```bash
+# All tests
+./mvnw test
+
+# Specific service
+./mvnw test -pl services/auth-service
+
+# Integration tests
+./mvnw verify
+
+# With coverage
+./mvnw test jacoco:report
+```
+
+### Frontend Development
+
+```bash
+cd frontend
+
+# Development server with hot reload
+npm start                 # http://localhost:4200
+
+# Build for production
+npm run build:prod
+
+# Run unit tests
+npm test
+
+# Run e2e tests
+npm run e2e
+
+# Lint check
+npm run lint
+```
+
+---
+
+## API Documentation
+
+### Swagger UI
+
+Each service exposes interactive API documentation:
+
+| Service | Swagger URL |
+|---------|-------------|
+| Auth | http://localhost:8081/swagger-ui.html |
+| Course | http://localhost:8082/swagger-ui.html |
+| Enrollment | http://localhost:8083/swagger-ui.html |
+| Payment | http://localhost:8084/swagger-ui.html |
+| Notification | http://localhost:8085/swagger-ui.html |
+| Analytics | http://localhost:8086/swagger-ui.html |
+| Organization | http://localhost:8087/swagger-ui.html |
+
+### API Endpoints Overview
+
+Base URL: `http://localhost:8000/api/v1`
+
+#### Authentication
+
+```http
+POST   /auth/register          # Register new user
+POST   /auth/login             # Login with email/password
+POST   /auth/refresh           # Refresh access token
+POST   /auth/logout            # Logout (revoke tokens)
+POST   /auth/change-password   # Change password
+GET    /auth/me                # Get current user
+```
+
+#### Users
+
+```http
+GET    /users                  # List users (Admin)
+GET    /users/{id}             # Get user by ID
+PUT    /users/me               # Update own profile
+PUT    /users/{id}             # Update user (Admin)
+DELETE /users/{id}             # Delete user (Admin)
+```
+
+#### Courses
+
+```http
+GET    /courses                # List published courses
+GET    /courses/{id}           # Get course details
+GET    /courses/search?q=...   # Search courses
+POST   /courses                # Create course (Instructor)
+PUT    /courses/{id}           # Update course
+PUT    /courses/{id}/publish   # Publish course
+DELETE /courses/{id}           # Delete/archive course
+```
+
+#### Enrollments
+
+```http
+POST   /enrollments/courses/{id}      # Enroll in course
+GET    /enrollments/my-courses        # My enrollments
+GET    /enrollments/courses/{id}      # Get enrollment status
+PUT    /enrollments/{id}/progress     # Update progress
+POST   /enrollments/courses/{id}/complete  # Mark complete
+```
+
+---
+
+## Configuration
+
+### Environment Variables
+
+Create `.env` file in `backend-java/`:
+
+```env
+# ============ Database ============
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=lms_user
+DB_PASSWORD=lms_password
+
+# ============ Redis ============
+REDIS_HOST=localhost
+REDIS_PORT=6379
+
+# ============ Kafka ============
+KAFKA_SERVERS=localhost:9092
+
+# ============ JWT ============
+JWT_SECRET=your-256-bit-secret-key-minimum-32-characters-long
+
+# ============ Service Discovery ============
+EUREKA_HOST=localhost
+EUREKA_PORT=8761
+EUREKA_USER=eureka
+EUREKA_PASSWORD=eureka123
+
+# ============ Config Server ============
+CONFIG_HOST=localhost
+CONFIG_PORT=8888
+CONFIG_USER=config
+CONFIG_PASSWORD=config123
+
+# ============ MinIO ============
+MINIO_ENDPOINT=http://localhost:9000
+MINIO_ACCESS_KEY=minioadmin
+MINIO_SECRET_KEY=minioadmin
+
+# ============ Payments (Optional) ============
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+PAYME_MERCHANT_ID=...
+CLICK_MERCHANT_ID=...
+
+# ============ Email (Optional) ============
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=...
+MAIL_PASSWORD=...
+
+# ============ Push Notifications (Optional) ============
+VAPID_PUBLIC_KEY=...
+VAPID_PRIVATE_KEY=...
+```
+
+---
+
+## Deployment
+
+### Docker Production
+
+```bash
+cd backend-java
+
+# Build production images
+docker compose build
+
+# Start in detached mode
+docker compose up -d
+
+# Scale services
+docker compose up -d --scale auth-service=3
+
+# View logs
+docker compose logs -f auth-service
+
+# Stop all
+docker compose down
+```
+
+### Health Monitoring
+
+```bash
+# Check all services health
+curl http://localhost:8761/eureka/apps
+
+# Check specific service
+curl http://localhost:8081/actuator/health
+
+# View metrics
+curl http://localhost:8081/actuator/metrics
+```
+
+---
+
+## Features
+
+### Core Features
+
+- Multi-role authentication (Admin, Instructor, Student, Manager)
+- Course management with modules, lessons, quizzes
+- Video streaming with HLS support
+- Progress tracking and certificates
+- Gamification (points, levels, badges)
+
+### Enterprise Features
+
+- Multi-tenancy with organizations
+- SSO (SAML, OAuth2, LDAP)
+- SCORM package support
+- Webinars (Zoom, Jitsi)
+- API keys for integrations
+
+### AI/ML Features
+
+- Personalized recommendations
+- Student risk assessment
+- Learning path optimization
+- Smart search with NLP
+
+### Performance
+
+- Redis caching (85%+ hit rate)
+- Rate limiting at gateway
+- Database indexing (60+ indexes)
+- Response time <50ms (p95)
+
+---
+
+## Troubleshooting
+
+### Service won't start
+
+```bash
+# Check if dependencies are running
+docker compose ps
+
+# Check logs
+docker compose logs service-registry
+docker compose logs config-server
+
+# Verify port availability
+lsof -i :8761
+```
+
+### Database connection issues
+
+```bash
+# Test PostgreSQL connection
+docker exec -it lms-postgres psql -U lms_user -d lms_auth
+
+# Check database logs
+docker compose logs postgres
+```
+
+### Redis connection issues
+
+```bash
+# Test Redis connection
+docker exec -it lms-redis redis-cli ping
+
+# Check Redis logs
+docker compose logs redis
+```
+
+### Build failures
+
+```bash
+# Clean and rebuild
+./mvnw clean install -DskipTests -U
+
+# Check Java version
+java -version  # Must be 21+
+
+# Clear Maven cache
+rm -rf ~/.m2/repository/com/freelms
+```
+
+---
+
+## Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+1. Fork the repository
+2. Create feature branch: `git checkout -b feature/my-feature`
+3. Commit changes: `git commit -m 'Add my feature'`
+4. Push to branch: `git push origin feature/my-feature`
+5. Open Pull Request
+
+---
+
+## Security
+
+For security concerns, see [SECURITY.md](SECURITY.md).
+
+Key security features:
+- JWT authentication with refresh tokens
+- Rate limiting at API Gateway
+- CORS configuration
+- Input validation (Jakarta Validation)
+- SQL injection prevention (JPA/Hibernate)
+- XSS protection
+
+---
+
+## License
+
+This project is licensed under the MIT License - see [LICENSE](LICENSE) for details.
+
+---
+
+## Support
+
+- **Issues**: [GitHub Issues](https://github.com/your-repo/FREE_LMS/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/your-repo/FREE_LMS/discussions)
+
+---
+
+**Made with passion for education technology**

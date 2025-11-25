@@ -1,50 +1,115 @@
-# Dependencies
+# =====================
+# Java / Maven
+# =====================
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# =====================
+# Node.js / NPM
+# =====================
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.pnpm-store/
 
-# Environment variables
+# =====================
+# Environment Variables
+# =====================
 .env
 .env.local
 .env.*.local
+*.env
 
-# Build outputs
+# =====================
+# Build Outputs
+# =====================
 dist/
 build/
 out/
+target/
 
-# IDEs
+# =====================
+# IDE / Editors
+# =====================
 .vscode/
 .idea/
+*.iml
+*.ipr
+*.iws
 *.swp
 *.swo
 *~
 .DS_Store
+*.sublime-workspace
+*.sublime-project
 
+# =====================
 # Logs
+# =====================
 logs/
 *.log
+*.log.*
 
+# =====================
 # Database
+# =====================
 *.db
 *.sqlite
+*.h2.db
 
+# =====================
 # Docker
+# =====================
 docker-compose.override.yml
+.docker/
 
-# Uploads
+# =====================
+# Uploads / Temp
+# =====================
 uploads/
 temp/
+tmp/
 
-# Coverage
+# =====================
+# Test / Coverage
+# =====================
 coverage/
 .nyc_output/
+test-results/
+*.lcov
 
-# Backend specific
-backend/uploads/
-backend/logs/
-
-# Frontend specific
+# =====================
+# Frontend (Angular)
+# =====================
 frontend/.angular/
 frontend/dist/
+frontend/.sass-cache/
+
+# =====================
+# Backend (Java)
+# =====================
+backend-java/**/target/
+backend-java/**/*.class
+backend-java/**/logs/
+
+# =====================
+# Bots (Node.js)
+# =====================
+bots/**/node_modules/
+bots/**/.env
+
+# =====================
+# OS Files
+# =====================
+Thumbs.db
+ehthumbs.db
+Desktop.ini
