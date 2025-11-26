@@ -1,4 +1,4 @@
-# FREE LMS — Java Spring Boot Backend
+# Smartup LMS — Java Spring Boot Backend
 
 <div align="center">
 
@@ -148,7 +148,7 @@
 #### Как маршрутизируются запросы
 
 ```
-Пользователь → api.freelms.com/api/courses/123
+Пользователь → api.smartup.uz/api/courses/123
                          │
                          ▼
                   ┌──────────────┐
@@ -248,8 +248,8 @@ docker compose version # 2.20+
 
 ```bash
 # Клонировать репозиторий
-git clone https://github.com/your-org/FREE_LMS.git
-cd FREE_LMS/backend-java
+git clone https://github.com/your-org/smartup-lms.git
+cd smartup-lms/backend-java
 
 # Запустить всё
 docker compose up -d
@@ -623,6 +623,6 @@ MIT License — см. [LICENSE](../LICENSE)
 
 <div align="center">
 
-**FREE LMS Backend** — Enterprise-grade Learning Management System
+**Smartup LMS Backend** — Enterprise-grade Learning Management System
 
 </div>
