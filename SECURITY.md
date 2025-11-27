@@ -1,4 +1,4 @@
-# Security Policy — Smartup LMS
+# Security Policy — FREE LMS
 
 ## 🛡️ Поддерживаемые версии
 
@@ -101,7 +101,7 @@ jwt:
   secret: ${JWT_SECRET}  # Минимум 256 бит
   access-token-expiration: 15m
   refresh-token-expiration: 7d
-  issuer: smartup.uz
+  issuer: smartup24.com
 ```
 
 ---
@@ -152,8 +152,8 @@ jwt:
 
 **Как сообщить:**
 
-1. 📧 Email: security@smartup.uz
-2. 🔐 PGP Key: [Download](https://smartup.uz/.well-known/security.txt)
+1. 📧 Email: security@smartup24.com
+2. 🔐 PGP Key: [Download](https://www.smartup24.com/.well-known/security.txt)
 
 ### Что включить в отчёт
 
@@ -277,7 +277,8 @@ Subject: [SECURITY] Brief description
 
 ## 📞 Контакты
 
-- **Security Team**: security@smartup.uz
+- **Security Team**: security@smartup24.com
+- **Website**: [www.smartup24.com](https://www.smartup24.com)
 - **Bug Reports**: GitHub Issues (non-security)
 - **Emergency**: +7-XXX-XXX-XXXX (24/7)
 

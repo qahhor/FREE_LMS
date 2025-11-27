@@ -1,7 +1,7 @@
 # Runbook: Service Restart
 
 ## Overview
-Procedures for restarting Smartup LMS microservices safely.
+Procedures for restarting FREE LMS microservices safely.
 
 ## When to Use
 - Service is unresponsive
@@ -79,7 +79,7 @@ kubectl get pods -n freelms -l app=<service-name>
 # All pods should be Running, 1/1 Ready
 
 # 2. Health endpoint
-curl https://api.freelms.com/<service>/actuator/health
+curl https://api.smartup24.com/<service>/actuator/health
 # Should return {"status":"UP"}
 
 # 3. Check logs for errors

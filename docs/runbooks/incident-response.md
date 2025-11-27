@@ -1,7 +1,7 @@
 # Runbook: Incident Response
 
 ## Overview
-Structured approach to handling production incidents for Smartup LMS.
+Structured approach to handling production incidents for FREE LMS.
 
 ---
 
@@ -25,7 +25,7 @@ Structured approach to handling production incidents for Smartup LMS.
 3. **Initial assessment:**
    ```bash
    # Quick health check
-   curl https://api.freelms.com/actuator/health
+   curl https://api.smartup24.com/actuator/health
 
    # Check all services
    kubectl get pods -n freelms
@@ -42,8 +42,8 @@ Structured approach to handling production incidents for Smartup LMS.
    - Is data at risk?
 
 2. **Check dashboards:**
-   - Grafana: https://grafana.freelms.com/d/freelms-overview
-   - Jaeger: https://jaeger.freelms.com
+   - Grafana: https://grafana.smartup24.com/d/freelms-overview
+   - Jaeger: https://jaeger.smartup24.com
 
 3. **Assign roles:**
    - **Incident Commander (IC):** Coordinates response
@@ -70,7 +70,7 @@ kubectl scale deployment/<service> --replicas=5 -n freelms
 **Option C: Feature Toggle**
 ```bash
 # Disable problematic feature
-curl -X POST https://api.freelms.com/admin/feature-flags \
+curl -X POST https://api.smartup24.com/admin/feature-flags \
   -H "Authorization: Bearer $ADMIN_TOKEN" \
   -d '{"flag": "new-feature", "enabled": false}'
 ```
@@ -89,7 +89,7 @@ kubectl exec -it postgres-0 -n freelms -- psql -U freelms
 1. **Verify fix:**
    ```bash
    # Health check
-   curl https://api.freelms.com/actuator/health
+   curl https://api.smartup24.com/actuator/health
 
    # Test critical flows
    ./integration-tests/run-smoke-tests.sh
@@ -128,7 +128,7 @@ Status: Investigating
 We are currently experiencing issues with <service>.
 Our team is actively investigating.
 We will provide updates every 30 minutes.
-Status page: https://status.freelms.com
+Status page: https://status.smartup24.com
 ```
 
 ### Resolution

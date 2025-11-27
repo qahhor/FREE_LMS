@@ -1,4 +1,4 @@
-# Smartup LMS — Java Spring Boot Backend
+# FREE LMS — Java Spring Boot Backend
 
 <div align="center">
 
@@ -148,7 +148,7 @@
 #### Как маршрутизируются запросы
 
 ```
-Пользователь → api.smartup.uz/api/courses/123
+Пользователь → api.smartup24.com/api/courses/123
                          │
                          ▼
                   ┌──────────────┐
@@ -653,6 +653,6 @@ MIT License — см. [LICENSE](../LICENSE)
 
 <div align="center">
 
-**Smartup LMS Backend** — Enterprise-grade Learning Management System
+**FREE LMS Backend** — Enterprise-grade Learning Management System
 
 </div>

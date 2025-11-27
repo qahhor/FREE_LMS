@@ -1,6 +1,6 @@
 # CBU Currency Rates Module
 
-Модуль курсов валют Центрального банка Республики Узбекистан для Smartup LMS.
+Модуль курсов валют Центрального банка Республики Узбекистан для FREE LMS.
 
 ## Описание
 
@@ -134,4 +134,4 @@ GET /api/v1/modules/cbu/widget
 
 ## Лицензия
 
-MIT License - Smartup LMS
+MIT License - FREE LMS
