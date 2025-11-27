@@ -43,6 +43,7 @@
         <module>services/reporting-service</module>
         <module>services/integration-service</module>
         <module>services/marketplace-service</module>
+        <module>services/onboarding-service</module>
         <!-- Marketplace Modules -->
         <module>modules/cbu-currency-rates</module>
     </modules>
