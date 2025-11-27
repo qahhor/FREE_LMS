@@ -1,4 +1,4 @@
-# Smartup LMS - Руководство по развертыванию
+# FREE LMS - Руководство по развертыванию
 
 ## Содержание
 
@@ -221,10 +221,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - api.smartup.uz
+        - api.smartup24.com
       secretName: freelms-tls
   rules:
-    - host: api.smartup.uz
+    - host: api.smartup24.com
       http:
         paths:
           - path: /
@@ -269,7 +269,7 @@ helm install prometheus prometheus-community/kube-prometheus-stack \
   --namespace=monitoring \
   --create-namespace
 
-# Добавление ServiceMonitor для Smartup LMS
+# Добавление ServiceMonitor для FREE LMS
 kubectl apply -f - <<EOF
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -396,6 +396,6 @@ kubectl exec -it -n freelms postgres-auth-0 -- psql -U freelms_prod -d freelms_a
 
 ## Контакты поддержки
 
-- DevOps: devops@smartup.uz
-- On-call: +7-XXX-XXX-XXXX
-- Slack: #freelms-ops
+- DevOps: devops@smartup24.com
+- Website: www.smartup24.com
+- Email: opensource@smartup24.com

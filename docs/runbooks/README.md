@@ -1,6 +1,6 @@
-# Smartup LMS - Operations Runbooks
+# FREE LMS - Operations Runbooks
 
-This directory contains operational runbooks for managing the Smartup LMS platform.
+This directory contains operational runbooks for managing the FREE LMS platform.
 
 ## Quick Links
 
@@ -30,5 +30,5 @@ Before starting on-call shift:
 |------|---------|
 | Primary On-Call | PagerDuty rotation |
 | Secondary On-Call | PagerDuty rotation |
-| Infrastructure Lead | infra@freelms.com |
-| Database Admin | dba@freelms.com |
+| Infrastructure Lead | infra@smartup24.com |
+| Database Admin | dba@smartup24.com |
