@@ -123,6 +123,7 @@ FREE LMS использует модульную монолитную архит
 
 | Уровень | Технологии |
 |---------|-----------|
+| **Frontend** | Angular 17+, Material UI, RxJS |
 | **Backend** | Java 21, Spring Boot 3.2.5 |
 | **Базы данных** | PostgreSQL 16, Redis 7, MongoDB 7 |
 | **Messaging** | Apache Kafka |
@@ -210,6 +211,16 @@ java -jar target/free-lms-monolith-1.0.0-SNAPSHOT.jar
 
 ```
 free-lms/
+├── frontend/                   # Angular SPA приложение
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── core/           # Services, guards, interceptors, models
+│   │   │   ├── shared/         # Shared components
+│   │   │   └── features/       # Feature modules
+│   │   ├── assets/
+│   │   └── environments/
+│   ├── package.json
+│   └── angular.json
 ├── backend-java/
 │   ├── monolith/               # Основное приложение
 │   │   ├── src/
@@ -225,6 +236,7 @@ free-lms/
 │   └── pom.xml
 ├── docs/
 │   ├── QUICK_START_GUIDE.md    # Пошаговое руководство
+│   ├── FRONTEND.md             # Frontend документация
 │   ├── TROUBLESHOOTING.md      # Решение проблем
 │   └── runbooks/               # Операционные руководства
 ├── docker-compose.monolith.yml # Production compose
@@ -385,6 +397,9 @@ mvn test jacoco:report
 - [x] Платежи (Stripe)
 - [x] Redis кэширование
 - [x] Kafka события
+- [x] Frontend SPA (Angular 17+)
+- [x] Telegram и WhatsApp боты (Java)
+- [x] Курсы валют ЦБ Узбекистана
 
 ### Planned
 - [ ] Mobile apps (iOS, Android)
@@ -392,6 +407,8 @@ mvn test jacoco:report
 - [ ] xAPI (Tin Can) integration
 - [ ] GraphQL API
 - [ ] Multi-tenancy improvements
+
+> **Note**: Полная документация по Frontend в [FRONTEND.md](docs/FRONTEND.md)
 
 ---
 
