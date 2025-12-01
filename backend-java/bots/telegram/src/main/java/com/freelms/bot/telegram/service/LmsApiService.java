@@ -56,8 +56,12 @@ public class LmsApiService {
                             .queryParam("size", limit)
                             .build())
                     .retrieve()
-                    .onStatus(HttpStatusCode::isError, clientResponse -> {
-                        log.error("API error fetching courses: status={}", clientResponse.statusCode());
+                    .onStatus(HttpStatusCode::is5xxServerError, clientResponse -> {
+                        log.error("API server error fetching courses: status={}", clientResponse.statusCode());
+                        return clientResponse.createException();
+                    })
+                    .onStatus(HttpStatusCode::is4xxClientError, clientResponse -> {
+                        log.error("API client error fetching courses: status={}", clientResponse.statusCode());
                         return Mono.empty();
                     })
                     .bodyToMono(new ParameterizedTypeReference<ApiResponse<PagedResponse<Map<String, Object>>>>() {})
@@ -100,8 +104,12 @@ public class LmsApiService {
             ApiResponse<Map<String, Object>> response = webClient.get()
                     .uri("/courses/{id}", courseId)
                     .retrieve()
-                    .onStatus(HttpStatusCode::isError, clientResponse -> {
-                        log.error("API error fetching course {}: status={}", courseId, clientResponse.statusCode());
+                    .onStatus(HttpStatusCode::is5xxServerError, clientResponse -> {
+                        log.error("API server error fetching course {}: status={}", courseId, clientResponse.statusCode());
+                        return clientResponse.createException();
+                    })
+                    .onStatus(HttpStatusCode::is4xxClientError, clientResponse -> {
+                        log.error("API client error fetching course {}: status={}", courseId, clientResponse.statusCode());
                         return Mono.empty();
                     })
                     .bodyToMono(new ParameterizedTypeReference<ApiResponse<Map<String, Object>>>() {})
@@ -153,8 +161,12 @@ public class LmsApiService {
                             .build())
                     .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
                     .retrieve()
-                    .onStatus(HttpStatusCode::isError, clientResponse -> {
-                        log.error("API error fetching user courses: status={}", clientResponse.statusCode());
+                    .onStatus(HttpStatusCode::is5xxServerError, clientResponse -> {
+                        log.error("API server error fetching user courses: status={}", clientResponse.statusCode());
+                        return clientResponse.createException();
+                    })
+                    .onStatus(HttpStatusCode::is4xxClientError, clientResponse -> {
+                        log.error("API client error fetching user courses: status={}", clientResponse.statusCode());
                         return Mono.empty();
                     })
                     .bodyToMono(new ParameterizedTypeReference<ApiResponse<PagedResponse<EnrollmentResponse>>>() {})
