@@ -85,75 +85,27 @@ public class EnrollmentService {
     @Transactional(readOnly = true)
     public PagedResponse<EnrollmentDto> getUserEnrollments(Long userId, Pageable pageable) {
         Page<Enrollment> enrollments = enrollmentRepository.findByUserId(userId, pageable);
-        
-        // Load all courses in one query to avoid N+1 problem
-        List<Long> courseIds = enrollments.getContent().stream()
-                .map(Enrollment::getCourseId)
-                .distinct()
-                .toList();
-        Map<Long, Course> coursesMap = courseRepository.findByIdIn(courseIds).stream()
-                .collect(Collectors.toMap(Course::getId, Function.identity()));
-        
-        List<EnrollmentDto> dtos = enrollments.getContent().stream()
-                .map(e -> toDto(e, coursesMap.get(e.getCourseId())))
-                .toList();
-        return PagedResponse.of(enrollments, dtos);
+        return toPagedEnrollmentResponse(enrollments);
     }
 
     @Transactional(readOnly = true)
     public PagedResponse<EnrollmentDto> getUserActiveEnrollments(Long userId, Pageable pageable) {
         Page<Enrollment> enrollments = enrollmentRepository.findByUserIdAndStatus(
                 userId, EnrollmentStatus.ACTIVE, pageable);
-        
-        // Load all courses in one query to avoid N+1 problem
-        List<Long> courseIds = enrollments.getContent().stream()
-                .map(Enrollment::getCourseId)
-                .distinct()
-                .toList();
-        Map<Long, Course> coursesMap = courseRepository.findByIdIn(courseIds).stream()
-                .collect(Collectors.toMap(Course::getId, Function.identity()));
-        
-        List<EnrollmentDto> dtos = enrollments.getContent().stream()
-                .map(e -> toDto(e, coursesMap.get(e.getCourseId())))
-                .toList();
-        return PagedResponse.of(enrollments, dtos);
+        return toPagedEnrollmentResponse(enrollments);
     }
 
     @Transactional(readOnly = true)
     public PagedResponse<EnrollmentDto> getUserCompletedEnrollments(Long userId, Pageable pageable) {
         Page<Enrollment> enrollments = enrollmentRepository.findByUserIdAndStatus(
                 userId, EnrollmentStatus.COMPLETED, pageable);
-        
-        // Load all courses in one query to avoid N+1 problem
-        List<Long> courseIds = enrollments.getContent().stream()
-                .map(Enrollment::getCourseId)
-                .distinct()
-                .toList();
-        Map<Long, Course> coursesMap = courseRepository.findByIdIn(courseIds).stream()
-                .collect(Collectors.toMap(Course::getId, Function.identity()));
-        
-        List<EnrollmentDto> dtos = enrollments.getContent().stream()
-                .map(e -> toDto(e, coursesMap.get(e.getCourseId())))
-                .toList();
-        return PagedResponse.of(enrollments, dtos);
+        return toPagedEnrollmentResponse(enrollments);
     }
 
     @Transactional(readOnly = true)
     public PagedResponse<EnrollmentDto> getRecentEnrollments(Long userId, Pageable pageable) {
         Page<Enrollment> enrollments = enrollmentRepository.findRecentByUserId(userId, pageable);
-        
-        // Load all courses in one query to avoid N+1 problem
-        List<Long> courseIds = enrollments.getContent().stream()
-                .map(Enrollment::getCourseId)
-                .distinct()
-                .toList();
-        Map<Long, Course> coursesMap = courseRepository.findByIdIn(courseIds).stream()
-                .collect(Collectors.toMap(Course::getId, Function.identity()));
-        
-        List<EnrollmentDto> dtos = enrollments.getContent().stream()
-                .map(e -> toDto(e, coursesMap.get(e.getCourseId())))
-                .toList();
-        return PagedResponse.of(enrollments, dtos);
+        return toPagedEnrollmentResponse(enrollments);
     }
 
     @Transactional
@@ -228,6 +180,29 @@ public class EnrollmentService {
     @Transactional(readOnly = true)
     public List<Long> getEnrolledCourseIds(Long userId) {
         return enrollmentRepository.findCourseIdsByUserId(userId);
+    }
+
+    private PagedResponse<EnrollmentDto> toPagedEnrollmentResponse(Page<Enrollment> enrollments) {
+        if (enrollments.getContent().isEmpty()) {
+            return PagedResponse.of(enrollments, List.of());
+        }
+        
+        // Load all courses in one query to avoid N+1 problem
+        Map<Long, Course> coursesMap = loadCoursesMap(enrollments.getContent());
+        
+        List<EnrollmentDto> dtos = enrollments.getContent().stream()
+                .map(e -> toDto(e, coursesMap.get(e.getCourseId())))
+                .toList();
+        return PagedResponse.of(enrollments, dtos);
+    }
+
+    private Map<Long, Course> loadCoursesMap(List<Enrollment> enrollments) {
+        List<Long> courseIds = enrollments.stream()
+                .map(Enrollment::getCourseId)
+                .distinct()
+                .toList();
+        return courseRepository.findByIdIn(courseIds).stream()
+                .collect(Collectors.toMap(Course::getId, Function.identity()));
     }
 
     private EnrollmentDto toDto(Enrollment enrollment) {
