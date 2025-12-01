@@ -24,7 +24,7 @@ jobs:
           cd backend-java/monolith
           mvn clean package -DskipTests
 
-      - name: Build and Push Docker Image
+      - name: Build Docker Image
         run: |
           cd backend-java/monolith
           docker build -t freelms/app:${{ github.ref_name }} .
