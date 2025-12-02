@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatDividerModule } from '@angular/material/divider';
 import { AuthService } from '@core/services/auth.service';
 
 @Component({
@@ -19,7 +20,8 @@ import { AuthService } from '@core/services/auth.service';
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatDividerModule
   ],
   template: `
     <mat-toolbar color="primary" class="header">

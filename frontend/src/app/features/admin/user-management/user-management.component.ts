@@ -11,6 +11,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '@core/services/user.service';
 import { User, UserRole } from '@core/models';
@@ -30,7 +31,8 @@ import { User, UserRole } from '@core/models';
     MatChipsModule,
     MatMenuModule,
     MatProgressSpinnerModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatDividerModule
   ],
   template: `
     <div class="admin-container">
