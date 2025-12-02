@@ -33,6 +33,12 @@ spring:
     host: localhost
     port: 1025
 
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
+
 jwt:
   secret: test-secret-key-for-testing-purposes-minimum-32-chars
   expiration: 3600000
