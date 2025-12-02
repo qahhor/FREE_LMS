@@ -33,7 +33,7 @@ jobs:
           docker tag freelms/app:${{ github.ref_name }} freelms/app:latest
 
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: |
             backend-java/monolith/target/*.jar
