@@ -30,7 +30,7 @@
         <mapstruct.version>1.6.3</mapstruct.version>
         <lombok.version>1.18.36</lombok.version>
         <springdoc.version>2.7.0</springdoc.version>
-        <stripe.version>28.2.0</stripe.version>
+        <stripe.version>31.0.0</stripe.version>
         <minio.version>8.5.14</minio.version>
         <webpush.version>5.1.1</webpush.version>
     </properties>
